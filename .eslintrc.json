@@ -1,0 +1,58 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "standard-with-typescript",
+        "prettier"
+    ],
+    "plugins": [
+        "@typescript-eslint",
+        "eslint-plugin-import-helpers"
+    ],
+    "overrides": [],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "project": [
+            "./tsconfig.json"
+        ]
+    },
+    "rules": {
+        "@typescript-eslint/no-misused-promises": [
+            "error",
+            {
+                "checksVoidReturn": false
+            }
+        ],
+        "import-helpers/order-imports": [
+            "error",
+            {
+                "newlinesBetween": "always",
+                "groups": [
+                    "/^express/",
+                    "module",
+                    [
+                        "/^config/",
+                        "/^controllers/",
+                        "/^middlewares/",
+                        "/^models/",
+                        "/^routes/",
+                        "/^services/",
+                        "/^schemas/"
+                    ],
+                    [
+                        "parent",
+                        "sibling",
+                        "index"
+                    ]
+                ],
+                "alphabetize": {
+                    "order": "asc",
+                    "ignoreCase": true
+                }
+            }
+        ]
+    }
+}
