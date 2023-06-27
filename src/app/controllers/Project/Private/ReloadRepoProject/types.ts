@@ -1,6 +1,7 @@
-import { type IFormEditProject } from '../../../../models/validation/formEditProject/types'
-
-export interface IBodyRequest extends IFormEditProject {}
+export interface IBodyRequest {
+  repoId: number
+  idProject: string
+}
 export interface IResponseSend {
   message: string
 }

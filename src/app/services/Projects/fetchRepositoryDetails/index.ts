@@ -3,7 +3,7 @@ import { type IFetchRepositoryDetailsReturn } from './types'
 
 const fetchRepositoryDetails = async (
   repoId: number | null,
-  repoLink: string | null
+  repoLink?: string | null
 ): Promise<IFetchRepositoryDetailsReturn> => {
   const repositorySearchedById =
     typeof repoId === 'number' ? await Repositorie.findOneById(repoId) : null
@@ -14,9 +14,11 @@ const fetchRepositoryDetails = async (
 
   return {
     repoLink:
-      repoLink === null ? repositorySearchedById?.svn_url ?? null : repoLink,
+      typeof repoLink !== 'string'
+        ? repositorySearchedById?.svn_url ?? null
+        : repoLink,
     repositoryTechnologiesPoints:
-      repoLink === null ? repositoryTechnologiesPoints : null,
+      typeof repoLink !== 'string' ? repositoryTechnologiesPoints : null,
   }
 }
 
