@@ -1,4 +1,4 @@
-export type Owner = {
+export interface Owner {
   login: string
   id: number
   node_id: string
@@ -19,7 +19,7 @@ export type Owner = {
   site_admin: boolean
 }
 
-export type TRepositorie = {
+export interface IRepositorie {
   id: number
   node_id: string
   name: string

@@ -1,17 +1,11 @@
 import Joi, { type ValidationResult } from '@hapi/joi'
 
-import { type IFormCreateProject } from './types'
+import { type IFormEditProject } from './types'
 
-const schemaFormCreateProject = (
-  data: IFormCreateProject
-): ValidationResult => {
+const schemaFormEditProject = (data: IFormEditProject): ValidationResult => {
   const schema = Joi.object({
-    idProject: Joi.string().required(),
+    orderOfFive: Joi.number().optional().allow(0),
     name: Joi.string().min(4).max(47).required(),
-    images: Joi.object({
-      cover: Joi.string().required(),
-      images: Joi.array().items(Joi.string()).optional(),
-    }).required(),
     type: Joi.string().required(),
     technologiesUsed: Joi.array().items(Joi.string()).min(2).required(),
     websiteLink: Joi.string().optional().allow(''),
@@ -22,4 +16,4 @@ const schemaFormCreateProject = (
   return schema.validate(data)
 }
 
-export default schemaFormCreateProject
+export default schemaFormEditProject

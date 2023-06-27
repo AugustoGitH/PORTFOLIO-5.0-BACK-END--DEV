@@ -1,6 +1,7 @@
 const env = {
   PORT: process.env.PORT ?? String(3000),
   MODE: process.env.MODE ?? 'development',
+  API_ROUTE_GITHUB: 'https://api.github.com/users/AugustoGitH/repos',
   MONGO_CONNECTION_URL: function (): {
     MODE: string
     URL: string | null
@@ -12,7 +13,7 @@ const env = {
 
     return {
       MODE: this.MODE,
-      URL: URL,
+      URL,
     }
   },
 }

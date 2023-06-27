@@ -2,6 +2,6 @@ import { type IFormCreateProject } from '../../../../models/validation/formCreat
 
 export interface IBodyRequest extends IFormCreateProject {}
 
-export interface ISendResponse {
+export interface IResponseSend {
   message: string
 }
