@@ -1,14 +1,14 @@
 import createProjectController from './CreateProject'
-import deleteProject from './DeleteProject'
-import getProjects from './GetProjects'
+import deleteProjectController from './DeleteProject'
+import getProjectsController from './GetProjects'
 import getRepositoriesController from './GetRepositories'
 import ReloadRepoProjectController from './ReloadRepoProject'
 import updateProjectController from './UpdateProject'
 
 export {
   createProjectController,
-  deleteProject,
-  getProjects,
+  deleteProjectController,
+  getProjectsController,
   getRepositoriesController,
   updateProjectController,
   ReloadRepoProjectController,
