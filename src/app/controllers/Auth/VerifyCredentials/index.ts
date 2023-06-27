@@ -11,7 +11,7 @@ const verifyCredentials = async (
   res: Response
 ): Promise<void> => {
   const { TOKEN_AUTHENTICATION, TOKEN_SECRET } = process.env
-  const token = req.cookies[TOKEN_AUTHENTICATION ?? '']
+  const token: string | undefined = req.cookies[TOKEN_AUTHENTICATION ?? '']
 
   if (token === undefined) {
     res.status(200).send(

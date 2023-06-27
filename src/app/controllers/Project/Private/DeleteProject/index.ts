@@ -14,6 +14,7 @@ const deleteProject = async (req: Request, res: Response): Promise<void> => {
         message: constants.ERROR_MESSAGE_NOT_ID_PROJECT,
       })
     )
+    return
   }
 
   try {

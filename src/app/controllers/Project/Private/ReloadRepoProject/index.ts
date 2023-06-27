@@ -29,6 +29,7 @@ const ReloadRepoProject = async (
         message: constants.MESSAGE_ERROR_FETCH_INFOS_REPO,
       })
     )
+    return
   }
   try {
     await Project.findByIdAndUpdate(idProject, {
