@@ -18,7 +18,7 @@ router.delete(
   deleteProjectController
 )
 
-router.get(constants.ROUTE_API_PRIVATE_GET_PROJECT, getProjectsController)
+router.get(constants.ROUTE_API_PRIVATE_GET_PROJECTS, getProjectsController)
 router.get(
   constants.ROUTE_API_PRIVATE_GET_REPOSITORIES,
   getRepositoriesController

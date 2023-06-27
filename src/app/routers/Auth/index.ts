@@ -5,6 +5,7 @@ import {
   verifyCredentialsController,
 } from '../../controllers/Auth'
 import constants from './constants'
+
 const router = Router()
 
 router.post(constants.ROUTE_API_AUTH_LOGIN, loginController)
@@ -13,4 +14,6 @@ router.get(
   verifyCredentialsController
 )
 
-export default router
+const authRouters = router
+
+export default authRouters

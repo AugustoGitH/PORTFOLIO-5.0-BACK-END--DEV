@@ -6,6 +6,7 @@ import {
   viewProjectController,
 } from '../../../controllers/Project/Public'
 import constants from './constants'
+
 const router = Router()
 
 router.put(constants.ROUTE_API_PUBLIC_VIEW_PROJECT, viewProjectController)

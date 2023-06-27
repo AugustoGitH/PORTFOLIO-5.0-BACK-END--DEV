@@ -12,7 +12,7 @@ const credentialCheckAccess = async (
   next: NextFunction
 ): Promise<void> => {
   const token: string | undefined =
-    req.cookies[process.env.TOKEN_AUTHENTICATION_NAME ?? '']
+    req.cookies[process.env.TOKEN_AUTHENTICATION ?? '']
 
   if (token === undefined) {
     res.status(404).send(

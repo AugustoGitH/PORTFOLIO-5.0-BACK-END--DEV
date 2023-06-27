@@ -3,10 +3,23 @@ import { type Request, type Response } from 'express'
 import Project from '../../../../models/db/Project'
 import forceReturnType from '../../../../utils/forceReturnType'
 import constants from './constants'
-import { type IBodyRequest, type IResponseSend, type TStateLike } from './types'
+import {
+  type IQueryRequest,
+  type IResponseSend,
+  type TStateLike,
+} from './types'
 
 const likeProject = async (req: Request, res: Response): Promise<void> => {
-  const { idProject, stateLike }: IBodyRequest = req.body
+  const { idProject, stateLike }: IQueryRequest = req.query
+
+  if (idProject === undefined || stateLike === undefined) {
+    res.status(400).send(
+      forceReturnType<IResponseSend>({
+        message: constants.ERROR_MESSAGE_ID_PROJECT_OUR_STATE_LIKE_UNDEFINED,
+      })
+    )
+    return
+  }
 
   try {
     const projectSelected = await Project.findById(idProject)
