@@ -10,7 +10,7 @@ import {
 } from './types'
 
 const likeProject = async (req: Request, res: Response): Promise<void> => {
-  const { idProject, stateLike }: IQueryRequest = req.query
+  const { idProject, stateLike }: IQueryRequest = req.body
 
   if (idProject === undefined || stateLike === undefined) {
     res.status(400).send(

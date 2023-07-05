@@ -1,9 +1,10 @@
-import { Document } from 'mongoose'
+import { type Document } from 'mongoose'
+
 import {
-  IProjectImages,
-  IRepositoryTechnologiesPoints,
-  TProjectTechnologiesUsed,
-  TProjectType,
+  type IProjectImages,
+  type IRepositoryTechnologiesPoints,
+  type TProjectTechnologiesUsed,
+  type TProjectType,
 } from '../../../types/Project'
 
 export interface IProject {

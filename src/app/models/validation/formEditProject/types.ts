@@ -11,6 +11,6 @@ export interface IFormEditProject {
   websiteLink: string
   videoLink: string
   repoId: number | null
-  repoLink: string | null
+  repoLink: string
   idProject: string
 }

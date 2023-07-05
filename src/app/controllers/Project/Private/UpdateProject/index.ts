@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { type Request, type Response } from 'express'
 
 import Project from '../../../../models/db/Project'
@@ -9,7 +10,6 @@ import { type IBodyRequest, type IResponseSend } from './types'
 
 const updateProject = async (req: Request, res: Response): Promise<void> => {
   const { idProject, ...restValuesEdited }: IBodyRequest = req.body
-
   const { error } = schemaFormEditProject({ idProject, ...restValuesEdited })
 
   if (error !== undefined) {
@@ -37,10 +37,13 @@ const updateProject = async (req: Request, res: Response): Promise<void> => {
       ),
       Project.findByIdAndUpdate(idProject, {
         ...restValuesEdited,
-        ...(repoLinkSearched !== null && { repoLink: repoLinkSearched }),
-        ...(repositoryTechnologiesPointsSearched !== null && {
-          repositoryTechnologiesPoints: repositoryTechnologiesPointsSearched,
-        }),
+        ...(repoLinkSearched ? { repoLink: repoLinkSearched } : {}),
+        ...(repositoryTechnologiesPointsSearched
+          ? {
+              repositoryTechnologiesPoints:
+                repositoryTechnologiesPointsSearched,
+            }
+          : {}),
       }),
     ])
     res.status(200).send(

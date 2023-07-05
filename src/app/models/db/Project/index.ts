@@ -1,5 +1,6 @@
-import { model, Schema, Document } from 'mongoose'
-import { IProject, IProjectModelDocument } from './types'
+import { model, Schema } from 'mongoose'
+
+import { type IProjectModelDocument } from './types'
 
 const projectSchema = new Schema<IProjectModelDocument>(
   {

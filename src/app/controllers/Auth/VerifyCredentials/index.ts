@@ -11,9 +11,13 @@ const verifyCredentials = async (
   res: Response
 ): Promise<void> => {
   const { TOKEN_AUTHENTICATION, TOKEN_SECRET } = process.env
-  const token: string | undefined = req.cookies[TOKEN_AUTHENTICATION ?? '']
+  const tokenInCookies: string | undefined =
+    req.cookies[TOKEN_AUTHENTICATION ?? '']
+  const tokenInAuthorization = req.headers.authorization
 
-  if (token === undefined) {
+  const tokenVerify = tokenInCookies ?? tokenInAuthorization
+
+  if (tokenVerify === undefined) {
     res.status(200).send(
       forceReturnType<IResponseSend>({
         isAuthenticated: false,
@@ -23,7 +27,7 @@ const verifyCredentials = async (
     return
   }
   try {
-    jwt.verify(token, TOKEN_SECRET)
+    jwt.verify(tokenVerify, TOKEN_SECRET)
     res.status(200).send(
       forceReturnType<IResponseSend>({
         isAuthenticated: true,

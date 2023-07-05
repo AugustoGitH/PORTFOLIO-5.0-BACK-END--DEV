@@ -12,21 +12,23 @@ const app = express()
 
 app.use(cookieParser())
 
-app.use(function (req, res, next) {
+app.use(
   cors({
-    origin: ['http://localhost:3001', 'http://localhost:3000'],
+    origin: 'http://localhost:3001',
     credentials: true,
-    preflightContinue: true,
+    methods: ['DELETE', 'POST', 'GET', 'OPTIONS', "PUT"],
   })
+)
 
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3001')
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-  )
-  res.header('Access-Control-Allow-Credentials', 'true')
-  next()
-})
+// app.use(function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', 'http://localhost:3001')
+//   res.header(
+//     'Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+//   )
+//   res.header('Access-Control-Allow-Credentials', 'true')
+//   next()
+// })
 
 app.use(bodyParser.json({ limit: '9999999999mb' }))
 app.use(bodyParser.urlencoded({ limit: '9999999999mb', extended: true }))

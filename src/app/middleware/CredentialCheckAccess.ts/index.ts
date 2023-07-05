@@ -11,10 +11,13 @@ const credentialCheckAccess = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const token: string | undefined =
+  const tokenInCookies: string | undefined =
     req.cookies[process.env.TOKEN_AUTHENTICATION ?? '']
+  const tokenInAuthorization: string | undefined = req.headers.authorization
 
-  if (token === undefined) {
+  const tokenVerify = tokenInCookies ?? tokenInAuthorization
+
+  if (tokenVerify === undefined) {
     res.status(404).send(
       forceReturnType<IResponseSend>({
         message: constants.MESSAGE_ERROR_NOT_FOUND_TOKEN,
@@ -24,7 +27,7 @@ const credentialCheckAccess = async (
   }
 
   try {
-    jwt.verify(token, process.env.TOKEN_SECRET ?? '')
+    jwt.verify(tokenVerify, process.env.TOKEN_SECRET ?? '')
     next()
   } catch (error) {
     res.status(401).send(

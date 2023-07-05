@@ -52,17 +52,15 @@ const login = async (req: Request, res: Response): Promise<void> => {
       },
       TOKEN_SECRET ?? ''
     )
-    res
-      .status(200)
-      .cookie(TOKEN_AUTHENTICATION, token, {
-        secure: true,
-        httpOnly: true,
+    res.cookie(TOKEN_AUTHENTICATION, token, {
+      secure: true,
+      httpOnly: true,
+    })
+    res.status(200).send(
+      forceReturnType<IResponseSend>({
+        message: constants.MESSAGE_SUCCESS_LOGIN,
       })
-      .send(
-        forceReturnType<IResponseSend>({
-          message: constants.MESSAGE_SUCCESS_LOGIN,
-        })
-      )
+    )
   } catch (error) {
     console.log(error)
     res.status(500).send(

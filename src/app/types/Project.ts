@@ -1,4 +1,4 @@
-export type TProjectType = 'e-commerce' | 'web app' | 'lading page'
+export type TProjectType = 'e-commerce' | 'web app' | 'lading page' | 'all'
 export type TProjectTechnologiesUsed =
   | 'html5'
   | 'css3'

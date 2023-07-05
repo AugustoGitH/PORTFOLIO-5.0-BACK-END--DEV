@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { type Request, type Response } from 'express'
 
 import Project from '../../../../models/db/Project'
@@ -33,10 +34,12 @@ const ReloadRepoProject = async (
   }
   try {
     await Project.findByIdAndUpdate(idProject, {
-      ...(repoLink !== null && { repoLink }),
-      ...(repositoryTechnologiesPoints !== null && {
-        repositoryTechnologiesPoints,
-      }),
+      ...(repoLink ? { repoLink } : {}),
+      ...(repositoryTechnologiesPoints
+        ? {
+            repositoryTechnologiesPoints,
+          }
+        : {}),
     })
     res.status(200).send(
       forceReturnType<IResponseSend>({
