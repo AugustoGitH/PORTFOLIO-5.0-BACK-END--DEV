@@ -11,8 +11,15 @@ const verifyCredentials = async (
   res: Response
 ): Promise<void> => {
   const { TOKEN_AUTHENTICATION, TOKEN_SECRET } = process.env
+
+  if (TOKEN_AUTHENTICATION === undefined || TOKEN_SECRET === undefined) {
+    throw new Error(
+      'TOKEN_AUTHENTICATION ou TOKEN_SECRET não se encontra nas variaveis de ambiente!'
+    )
+  }
+
   const tokenInCookies: string | undefined =
-    req.cookies[TOKEN_AUTHENTICATION ?? '']
+    req.cookies[TOKEN_AUTHENTICATION]
   const tokenInAuthorization = req.headers.authorization
 
   const tokenVerify = tokenInCookies ?? tokenInAuthorization

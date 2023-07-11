@@ -32,12 +32,10 @@ const createProject = async (req: Request, res: Response): Promise<void> => {
 
   const newProject = {
     ...projectFormCreated,
-    ...(repoLinkSearched ? { repoLink: repoLinkSearched } : {}),
-    ...(repositoryTechnologiesPointsSearched
-      ? {
-          repositoryTechnologiesPoints: repositoryTechnologiesPointsSearched,
-        }
-      : {}),
+    ...(repoLinkSearched && { repoLink: repoLinkSearched }),
+    ...(repositoryTechnologiesPointsSearched && {
+      repositoryTechnologiesPoints: repositoryTechnologiesPointsSearched,
+    }),
   }
 
   try {

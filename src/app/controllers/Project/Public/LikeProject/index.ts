@@ -1,6 +1,7 @@
 import { type Request, type Response } from 'express'
 
 import Project from '../../../../models/db/Project'
+import { type IActionRegister } from '../../../../models/db/Project/types'
 import forceReturnType from '../../../../utils/forceReturnType'
 import constants from './constants'
 import {
@@ -11,6 +12,13 @@ import {
 
 const likeProject = async (req: Request, res: Response): Promise<void> => {
   const { idProject, stateLike }: IQueryRequest = req.body
+  const { CUSTOMER_ID } = process.env
+
+  if (CUSTOMER_ID === undefined) {
+    throw new Error('A variavel de ambiente TOKEN_CUSTOMER_ID é indefinida!')
+  }
+
+  const customerId: string | undefined = req.cookies[CUSTOMER_ID]
 
   if (idProject === undefined || stateLike === undefined) {
     res.status(400).send(
@@ -33,14 +41,26 @@ const likeProject = async (req: Request, res: Response): Promise<void> => {
     }
 
     await Project.findByIdAndUpdate(idProject, {
-      $inc: {
-        likes:
-          stateLike === forceReturnType<TStateLike>('favorite')
-            ? 1
-            : stateLike === forceReturnType<TStateLike>('desfavorite')
-            ? -1
-            : 0,
-      },
+      ...(stateLike === forceReturnType<TStateLike>('favorite') &&
+      typeof customerId === 'string'
+        ? {
+            $push: {
+              likes: forceReturnType<IActionRegister>({
+                idCustomer: customerId,
+                previewDate: new Date(),
+              }),
+            },
+          }
+        : stateLike === forceReturnType<TStateLike>('desfavorite') &&
+          typeof customerId === 'string'
+        ? {
+            $pull: {
+              likes: forceReturnType<Omit<IActionRegister, 'previewDate'>>({
+                idCustomer: customerId,
+              }),
+            },
+          }
+        : {}),
     })
     res.status(200).send(
       forceReturnType<IResponseSend>({

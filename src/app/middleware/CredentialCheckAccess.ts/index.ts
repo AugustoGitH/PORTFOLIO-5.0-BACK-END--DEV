@@ -11,8 +11,15 @@ const credentialCheckAccess = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const tokenInCookies: string | undefined =
-    req.cookies[process.env.TOKEN_AUTHENTICATION ?? '']
+  const { TOKEN_AUTHENTICATION, TOKEN_SECRET } = process.env
+
+  if (TOKEN_AUTHENTICATION === undefined || TOKEN_SECRET === undefined) {
+    throw new Error(
+      'TOKEN_AUTHENTICATION ou TOKEN_SECRET não se encontra nas variaveis de ambiente!'
+    )
+  }
+
+  const tokenInCookies: string | undefined = req.cookies[TOKEN_AUTHENTICATION]
   const tokenInAuthorization: string | undefined = req.headers.authorization
 
   const tokenVerify = tokenInCookies ?? tokenInAuthorization
@@ -27,7 +34,7 @@ const credentialCheckAccess = async (
   }
 
   try {
-    jwt.verify(tokenVerify, process.env.TOKEN_SECRET ?? '')
+    jwt.verify(tokenVerify, TOKEN_SECRET)
     next()
   } catch (error) {
     res.status(401).send(

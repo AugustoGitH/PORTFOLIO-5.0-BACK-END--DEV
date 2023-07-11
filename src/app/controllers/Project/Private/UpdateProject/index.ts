@@ -37,13 +37,10 @@ const updateProject = async (req: Request, res: Response): Promise<void> => {
       ),
       Project.findByIdAndUpdate(idProject, {
         ...restValuesEdited,
-        ...(repoLinkSearched ? { repoLink: repoLinkSearched } : {}),
-        ...(repositoryTechnologiesPointsSearched
-          ? {
-              repositoryTechnologiesPoints:
-                repositoryTechnologiesPointsSearched,
-            }
-          : {}),
+        ...(repoLinkSearched && { repoLink: repoLinkSearched }),
+        ...(repositoryTechnologiesPointsSearched && {
+          repositoryTechnologiesPoints: repositoryTechnologiesPointsSearched,
+        }),
       }),
     ])
     res.status(200).send(

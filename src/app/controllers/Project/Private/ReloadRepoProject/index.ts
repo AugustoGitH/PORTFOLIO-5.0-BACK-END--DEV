@@ -34,12 +34,10 @@ const ReloadRepoProject = async (
   }
   try {
     await Project.findByIdAndUpdate(idProject, {
-      ...(repoLink ? { repoLink } : {}),
-      ...(repositoryTechnologiesPoints
-        ? {
-            repositoryTechnologiesPoints,
-          }
-        : {}),
+      ...(repoLink && { repoLink }),
+      ...(repositoryTechnologiesPoints && {
+        repositoryTechnologiesPoints,
+      }),
     })
     res.status(200).send(
       forceReturnType<IResponseSend>({

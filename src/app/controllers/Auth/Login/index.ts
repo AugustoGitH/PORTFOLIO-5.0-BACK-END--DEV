@@ -3,6 +3,7 @@ import { type Request, type Response } from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
+import env from '../../../constants/env'
 import schemaFormLogin from '../../../models/validation/formLogin'
 import forceReturnType from '../../../utils/forceReturnType'
 import constants from './constants'
@@ -45,14 +46,22 @@ const login = async (req: Request, res: Response): Promise<void> => {
     return
   }
   try {
+    if (TOKEN_SECRET === undefined || TOKEN_AUTHENTICATION === undefined) {
+      throw new Error(
+        'A variavel de ambiente TOKEN_SECRET ou TOKEN_AUTHENTICATION é indefinido!'
+      )
+    }
     const token = jwt.sign(
       {
         adminName: name,
         exp: Math.floor(Date.now() / 1000) + 60 * 60,
       },
-      TOKEN_SECRET ?? ''
+      TOKEN_SECRET
     )
     res.cookie(TOKEN_AUTHENTICATION, token, {
+      sameSite: 'none',
+      domain: env.HOST_NAME_FRONT().domain ?? undefined,
+      path: '/',
       secure: true,
       httpOnly: true,
     })

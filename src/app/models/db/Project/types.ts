@@ -7,6 +7,11 @@ import {
   type TProjectType,
 } from '../../../types/Project'
 
+export interface IActionRegister {
+  previewDate: Date
+  idCustomer: string
+}
+
 export interface IProject {
   orderOfFive: number
   name: string
@@ -16,8 +21,8 @@ export interface IProject {
   websiteLink: string
   videoLink: string
   repoId: number | null
-  views: number
-  likes: number
+  views: IActionRegister[]
+  likes: IActionRegister[]
   repositoryTechnologiesPoints: IRepositoryTechnologiesPoints
   repoLink: string
   favorite: boolean
